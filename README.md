@@ -27,17 +27,36 @@ To report to sensu, you can have:
       ...
     }
 
-statsd_custom
+statsd_raw
 =============
 
 This plugin scans selected message fields for statsd metrics (in raw format)
 and sends them to the configured statsd server.
 
     output {
-      statsd_custom {
+      statsd_raw {
         "host" => "localhost"
         "port" => 8125
         "fields" => ["message"]
       }
     }
 
+You would probably want to filter for specific messages using filters because
+only some events should be scanned, like this:
+
+    filter {
+      grok {
+        match => ["message", "\b[a-zA-Z0-9_.-]+:[a-zA-Z0-9|:_.-]+"]
+        add_tag => ["statsd"]
+      }
+    }
+
+    output {
+      if "statsd" in [tags] {
+        statsd_custom {
+          host => "localhost"
+          port => 8125
+          namespace => "l2met"
+        }
+      }
+    }

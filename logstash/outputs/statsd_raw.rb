@@ -1,11 +1,11 @@
 require "logstash/outputs/udp"
 require "logstash/namespace"
 
-class LogStash::Outputs::StatsdCustom < LogStash::Outputs::UDP
+class LogStash::Outputs::StatsdRaw < LogStash::Outputs::UDP
   # Monitor logstash messages for statsd packets and send them
   # out to statsd when found.
 
-  config_name "statsd_custom"
+  config_name "statsd_raw"
   milestone 1
 
   # The fields to monitor for statsd packets.
