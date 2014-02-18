@@ -30,7 +30,7 @@ To report to sensu, you can have:
 statsd_raw
 =============
 
-This plugin scans selected message fields for statsd metrics (in raw format)
+This plugin scans selected message fields for statsd metrics ([in raw text format](https://github.com/etsy/statsd/blob/master/docs/metric_types.md)), i.e. `gorets:1|c|@0.1`
 and sends them to the configured statsd server.
 
     output {
@@ -56,7 +56,7 @@ only some events should be scanned, like this:
         statsd_custom {
           host => "localhost"
           port => 8125
-          namespace => "l2met"
+          namespace => "logstash_groks_metrics"
         }
       }
     }
